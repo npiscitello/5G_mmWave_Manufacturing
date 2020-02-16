@@ -1,0 +1,8 @@
+{
+  "red_box" : {
+    "blue_box_1" : {
+      "compatible" : ["compatible_1", "compatible_2"],
+      "incompatible" : [incompatible_1", "incompatible_2"]
+    }
+  }
+}
