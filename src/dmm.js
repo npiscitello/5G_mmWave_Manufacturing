@@ -17,10 +17,11 @@ class row extends React.Component {
 
 class matrix extends React.Component {
   render() {
+    let graph = make_graph();
     return e(
       testButton,
       {
-        button_text : "Click me!",
+        button_text : graph.text,
         alert_text : "You clicked me :)"
       }
     );
