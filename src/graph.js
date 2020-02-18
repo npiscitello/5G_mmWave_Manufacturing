@@ -14,7 +14,7 @@
 class Vertex {
   name;
   category;
-  edges = [];
+  edges = {};
 
   constructor(category_p, name_p) {
     this.category = category_p;
@@ -38,8 +38,8 @@ class Graph {
 
   addEdge( vertex1_id, vertex2_id ) {
     if(this.contains(vertex1_id) && this.contains(vertex2_id)) {
-      this.graph[vertex1_id].edges.push(vertex2_id);
-      this.graph[vertex2_id].edges.push(vertex1_id);
+      this.graph[vertex1_id].edges[vertex2_id] = true;
+      this.graph[vertex2_id].edges[vertex1_id] = true;
     }
   }
 }
