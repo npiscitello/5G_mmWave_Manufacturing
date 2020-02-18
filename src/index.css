@@ -4,13 +4,21 @@ body {
 }
 
 .enabled {
-  color: white;
   background-color: green;
+  color: white;
 }
 
 .disabled {
   background-color: red;
   color: white;
+}
+
+.selected {
+  outline : 4px solid black
+}
+
+.deselected {
+  outline : 0px solid black
 }
 
 button {

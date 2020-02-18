@@ -1,12 +1,14 @@
 // shortcut for creating DOM elements
 const e = React.createElement;
 
-function testButton( props ) {
+function Button( props ) {
   return e(
-    "button", 
-    { 
-      onClick : () => alert(props.alert_text),
-      className : props.className
+    "button",
+    {
+      onClick : props.onClick,
+      // there's probably a better way to do this......
+      className : props.className,
+      id : props.id
     },
     props.button_text
   );
@@ -14,26 +16,8 @@ function testButton( props ) {
 
 
 
-function Button( props ) {
-  return e(
-    "button",
-    {
-      onClick : () => alert(props.alert_text_p),
-      className : props.className_p,
-      id : props.id_p
-    },
-    props.button_text_p
-  );
-}
-
-
-
-class row extends React.Component {
-}
-      
-
-
-class matrix extends React.Component {
+// this handles loading and processing of the graph
+class GraphManager extends React.Component {
   buildGraph() {
     let gobj = new Graph;
     let v0 = {id : getUUID(), v : new Vertex("test_cat0", "v0")};
@@ -65,12 +49,13 @@ class matrix extends React.Component {
     gobj.addEdge(v2.id, v3.id);
 
     gobj.addEdge(v3.id, v5.id);
-    return gobj;
+
+    return gobj.graph;
   }
 
   // build a tree of categories and vertices with IDs
-  convertGraphToTree( graph ) {
-    let tree = {};
+  buildTree( graph ) {
+    let tree = {}
     let id_arr = Object.keys(graph);
     for( const id of id_arr ) {
       if( !(!!tree[graph[id].category]) ) {
@@ -78,48 +63,108 @@ class matrix extends React.Component {
       }
       tree[graph[id].category][graph[id].name] = id;
     }
-    return tree;
+    return tree
   }
 
-  createButtonWithID( graph, vertex_id ) {
+  renderMatrix( graph, tree ) {
+    return e(Matrix, {
+      graph : graph,
+      tree : tree
+    });
+  }
+
+  render() {
+    let g = this.buildGraph();
+    let t = this.buildTree(g);
+    return this.renderMatrix(g, t);
+  }
+}
+
+
+
+class Matrix extends React.Component {
+  // lift the button state into the matrix class
+  constructor(props) {
+    super(props);
+    let button_enabled = {};
+    let button_selected = {};
+    for( const vertex_id in props.graph ) {
+      button_enabled[vertex_id] = true;
+      button_selected[vertex_id] = false;
+    }
+    this.state = {
+      button_enabled : button_enabled,
+      button_selected : button_selected
+    };
+  };
+
+  handleClick( id ) {
+    const state_copy = Object.assign({}, this.state);
+    state_copy.button_selected[id] = !state_copy.button_selected[id];
+    // enable everything then disable based on selected buttons
+    // this is easier than tracking diffs when a button is deselected
+    for( const vertex_id in state_copy.button_enabled ) {
+      state_copy.button_enabled[vertex_id] = true;
+    }
+    for( const v1_id in state_copy.button_selected ) {
+      if( state_copy.button_selected[v1_id] ) {
+        for( const v2_id in this.props.graph[v1_id].edges ) {
+          state_copy.button_enabled[v2_id] = false;
+        }
+      }
+    }
+    this.setState(state_copy);
+  }
+
+  createButtonWithID( vertex_id ) {
+    // generate class string
+    let className_arr = [];
+    if( this.state.button_enabled[vertex_id] ) {
+      className_arr.push("enabled");
+    } else {
+      className_arr.push("disabled");
+    }
+    if( this.state.button_selected[vertex_id] ) {
+      className_arr.push("selected");
+    } else {
+      className_arr.push("deselected");
+    }
     return e(
       Button,
       {
-        id_p : vertex_id,
-        className_p : "enabled",
-        button_text_p : graph[vertex_id].name,
-        alert_text_p : "ID: " + vertex_id,
+        id : vertex_id,
+        className : className_arr.join(" "),
+        button_text : this.props.graph[vertex_id].name,
+        onClick : () => this.handleClick(vertex_id),
         key : vertex_id
       },
     );
   }
 
-  // the tree defines structure, the graph defines data
-  buildRow( tree, category, graph ) {
+  buildRow( category ) {
     let row = [];
-    for( const element in tree[category] ) {
-      row.push(this.createButtonWithID(graph, 
-        tree[category][element]));
+    for( const element in this.props.tree[category] ) {
+      row.push(this.createButtonWithID(this.props.tree[category][element]));
     }
     return e("div", {key : category, className : "row"}, row);
   }
 
-  buildMatrix( tree, graph ) {
+  buildMatrix() {
     let matrix = [];
-    for( const category in tree ) {
-      matrix.push(this.buildRow(tree, category, graph));
+    for( const category in this.props.tree ) {
+      matrix.push(this.buildRow(category));
     }
     return e("div", {key : "matrix", className : "matrix"}, matrix);
   }
 
   render() {
-    let g = this.buildGraph().graph;
-    let t = this.convertGraphToTree(g);
-    return this.buildMatrix(t, g)
+    return this.buildMatrix()
   }
 }
 
+
+
 ReactDOM.render(
-  e(matrix),
+  e(GraphManager),
   document.getElementById("dmm_container")
 );
