@@ -27,25 +27,24 @@ class Graph {
 
   // this takes a vertex object
   addVertex( id, vertex ) {
-    if( !this.contains(id) ) {
+    if( !this.containsVertex(id) ) {
       this.graph[id] = vertex;
     }
   }
 
-  contains( vertex_id ) {
-    return !!this.graph[vertex_id];
-  }
-
   addEdge( vertex1_id, vertex2_id ) {
-    if(this.contains(vertex1_id) && this.contains(vertex2_id)) {
+    if(this.containsVertex(vertex1_id) && this.containsVertex(vertex2_id)) {
       this.graph[vertex1_id].edges[vertex2_id] = true;
       this.graph[vertex2_id].edges[vertex1_id] = true;
     }
   }
-}
 
-function make_graph() {
-  graph = {};
-  graph.text = "test";
-  return graph;
+  containsVertex( vertex_id ) {
+    return !!this.graph[vertex_id];
+  }
+
+  containsEdge( vertex1_id, vertex2_id ) {
+    // both v1 and v2 will have each other in their edge list
+    return !!this.graph[vertex1_id].edges[vertex2_id];
+  }
 }
