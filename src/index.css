@@ -1,4 +1,19 @@
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
+  font: 10pt "Century Gothic", Futura, sans-serif;
   margin: 20px;
+}
+
+.enabled {
+  color: white;
+  background-color: green;
+}
+
+.disabled {
+  background-color: red;
+  color: white;
+}
+
+button {
+  margin : 10px;
+  font: 10pt "Century Gothic", Futura, sans-serif;
 }

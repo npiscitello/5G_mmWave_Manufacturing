@@ -4,8 +4,25 @@ const e = React.createElement;
 function testButton( props ) {
   return e(
     "button", 
-    { onClick : () => alert(props.alert_text) },
+    { 
+      onClick : () => alert(props.alert_text),
+      className : props.className
+    },
     props.button_text
+  );
+}
+
+
+
+function Button( props ) {
+  return e(
+    "button",
+    {
+      onClick : () => alert(props.alert_text_p),
+      className : props.className_p,
+      id : props.id_p
+    },
+    props.button_text_p
   );
 }
 
@@ -16,22 +33,15 @@ class row extends React.Component {
       
 
 
-var v_ids = [];
 class matrix extends React.Component {
-  testGraph() {
+  buildGraph() {
     let gobj = new Graph;
     let v0 = {id : getUUID(), v : new Vertex("test_cat0", "v0")};
-    v_ids.push(v0.id);
     let v1 = {id : getUUID(), v : new Vertex("test_cat0", "v1")};
-    v_ids.push(v1.id);
     let v2 = {id : getUUID(), v : new Vertex("test_cat0", "v2")};
-    v_ids.push(v2.id);
     let v3 = {id : getUUID(), v : new Vertex("test_cat1", "v3")};
-    v_ids.push(v3.id);
     let v4 = {id : getUUID(), v : new Vertex("test_cat1", "v4")};
-    v_ids.push(v4.id);
     let v5 = {id : getUUID(), v : new Vertex("test_cat1", "v5")};
-    v_ids.push(v5.id);
 
     // a Vertex is a blue box
     gobj.addVertex(v0.id, v0.v);
@@ -58,21 +68,54 @@ class matrix extends React.Component {
     return gobj;
   }
 
-  render() {
-    let g = this.testGraph();
-    console.log(JSON.stringify(g.graph));
-    console.log(g.containsVertex(v_ids[0]))
-    console.log(g.containsVertex(5));
-    console.log(g.containsEdge(v_ids[0], v_ids[1]));
-    console.log(g.containsEdge(v_ids[1], v_ids[2]));
-    console.log(g.containsEdge(v_ids[1], 5));
-    return e(
-      testButton,
-      {
-        button_text : "click me",
-        alert_text : "You clicked me :)"
+  // build a tree of categories and vertices with IDs
+  convertGraphToTree( graph ) {
+    let tree = {};
+    let id_arr = Object.keys(graph);
+    for( const id of id_arr ) {
+      if( !(!!tree[graph[id].category]) ) {
+        tree[graph[id].category] = {};
       }
+      tree[graph[id].category][graph[id].name] = id;
+    }
+    return tree;
+  }
+
+  createButtonWithID( graph, vertex_id ) {
+    return e(
+      Button,
+      {
+        id_p : vertex_id,
+        className_p : "enabled",
+        button_text_p : graph[vertex_id].name,
+        alert_text_p : "ID: " + vertex_id,
+        key : vertex_id
+      },
     );
+  }
+
+  // the tree defines structure, the graph defines data
+  buildRow( tree, category, graph ) {
+    let row = [];
+    for( const element in tree[category] ) {
+      row.push(this.createButtonWithID(graph, 
+        tree[category][element]));
+    }
+    return e("div", {key : category, className : "row"}, row);
+  }
+
+  buildMatrix( tree, graph ) {
+    let matrix = [];
+    for( const category in tree ) {
+      matrix.push(this.buildRow(tree, category, graph));
+    }
+    return e("div", {key : "matrix", className : "matrix"}, matrix);
+  }
+
+  render() {
+    let g = this.buildGraph().graph;
+    let t = this.convertGraphToTree(g);
+    return this.buildMatrix(t, g)
   }
 }
 
