@@ -11,13 +11,41 @@
 // process is scalable - the graph can be pre-built serverside and distributed
 // to clients if needed.
 
-// we don't need remove functions b/c users won't be editing the graph
-// addNode
-// addEdge
+class Vertex {
+  name;
+  category;
+  edges = [];
 
+  constructor(category_p, name_p) {
+    this.category = category_p;
+    this.name = name_p;
+  }
+}
+
+class Graph {
+  graph = {};
+
+  // this takes a vertex object
+  addVertex( id, vertex ) {
+    if( !this.contains(id) ) {
+      this.graph[id] = vertex;
+    }
+  }
+
+  contains( vertex_id ) {
+    return !!this.graph[vertex_id];
+  }
+
+  addEdge( vertex1_id, vertex2_id ) {
+    if(this.contains(vertex1_id) && this.contains(vertex2_id)) {
+      this.graph[vertex1_id].edges.push(vertex2_id);
+      this.graph[vertex2_id].edges.push(vertex1_id);
+    }
+  }
+}
 
 function make_graph() {
-  let graph = {};
+  graph = {};
   graph.text = "test";
   return graph;
 }
