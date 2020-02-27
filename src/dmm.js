@@ -8,7 +8,8 @@ function Button( props ) {
       onClick : props.onClick,
       // there's probably a better way to do this......
       className : props.className,
-      id : props.id
+      id : props.id,
+      disabled : props.disabled
     },
     props.button_text
   );
@@ -119,10 +120,13 @@ class Matrix extends React.Component {
   createButtonWithID( vertex_id ) {
     // generate class string
     let className_arr = [];
+    let disabled_bool = false;
     if( this.state.button_enabled[vertex_id] ) {
       className_arr.push("enabled");
+      disabled_bool = false;
     } else {
       className_arr.push("disabled");
+      disabled_bool = true;
     }
     if( this.state.button_selected[vertex_id] ) {
       className_arr.push("selected");
@@ -136,13 +140,15 @@ class Matrix extends React.Component {
         className : className_arr.join(" "),
         button_text : this.props.graph[vertex_id].name,
         onClick : () => this.handleClick(vertex_id),
-        key : vertex_id
+        key : vertex_id,
+        disabled : disabled_bool
       },
     );
   }
 
   buildRow( category ) {
     let row = [];
+    row.push(e("button", {className : "category", disabled : true}, category));
     for( const element in this.props.tree[category] ) {
       row.push(this.createButtonWithID(this.props.tree[category][element]));
     }
