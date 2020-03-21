@@ -67,28 +67,37 @@ class Matrix extends React.Component {
   handleClick( id ) {
     const state_copy = Object.assign({}, this.state);
     state_copy.button_selected[id] = !state_copy.button_selected[id];
-    // enable everything then disable based on selected buttons
-    // this is easier than tracking diffs when a button is deselected
-    // TODO since we have a list of all the buttons, figure out how to make
-    //    edges compatibilities (b/c that makes more sense intuitively)
-    for( const vertex_id in state_copy.button_enabled ) {
-      state_copy.button_enabled[vertex_id] = true;
-    }
+
+    // generate an array of each selections's edge endpoints
+    let endpoint_arrs = [];
     for( const v1_id in state_copy.button_selected ) {
       if( state_copy.button_selected[v1_id] ) {
-        // any selection automatically disables the rest of its category
-        let category = this.props.graph[v1_id].category;
-        for( const v2_name in this.props.tree[category] ) {
-          if( this.props.tree[category][v2_name] != v1_id ) {
-            state_copy.button_enabled[
-              this.props.tree[category][v2_name]] = false;
-          }
-        }
-        // any selection disables its edges
+        let endpoints = [];
         for( const v2_id in this.props.graph[v1_id].edges ) {
-          state_copy.button_enabled[v2_id] = false;
+          endpoints.push(v2_id);
+        }
+        endpoint_arrs.push(endpoints);
+      }
+    }
+
+    // Find the intersect of all of those arrays (only buttons that are
+    // compatible with ALL selections are valid). We also have to explicity
+    // enable each selected button.
+    // If there are no edge endpoints (no selections), enable everything.
+    if( endpoint_arrs.length ) {
+      let enabled_arr = endpoint_arrs.reduce(
+        (a, b) => a.filter(c => b.includes(c)));
+      for( const v_id in state_copy.button_enabled ) {
+        if( state_copy.button_selected[v_id] ) {
+          state_copy.button_enabled[v_id] = true;
+        } else {
+          state_copy.button_enabled[v_id] = enabled_arr.includes(v_id);
         }
       }
+    } else {
+      for( const v_id in state_copy.button_enabled ) {
+        state_copy.button_enabled[v_id] = true;
+     }
     }
     this.setState(state_copy);
   }

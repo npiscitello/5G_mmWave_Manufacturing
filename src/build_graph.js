@@ -119,30 +119,19 @@ function buildGraph() {
 
 
 
-  // an Edge is an incompatibility
+  // an Edge is a compatibility (the two vertices are compatible)
   // duplicates are OK - if an edge already exists, addEdge will not do anything
   // define edges in inter-category groups (for example, tech to tech edges,
   // tech to material edges, etc) - this should make for the most concise list
-  // there can only be 1 selection per category, so no need for same-cat edges
 
   // tech - material
-  gobj.addEdge(sla.id, abs.id);
-  gobj.addEdge(sla.id, vero.id);
-  gobj.addEdge(sla.id, nylon.id);
-  gobj.addEdge(sla.id, onyx.id);
-  gobj.addEdge(polyjet.id, abs.id);
-  gobj.addEdge(polyjet.id, flclear.id);
-  gobj.addEdge(polyjet.id, fltough.id);
-  gobj.addEdge(polyjet.id, nylon.id);
-  gobj.addEdge(polyjet.id, onyx.id);
-  gobj.addEdge(fdm.id, vero.id);
-  gobj.addEdge(fdm.id, flclear.id);
-  gobj.addEdge(fdm.id, fltough.id);
-  gobj.addEdge(sls.id, abs.id);
-  gobj.addEdge(sls.id, vero.id);
-  gobj.addEdge(sls.id, flclear.id);
-  gobj.addEdge(sls.id, fltough.id);
-  gobj.addEdge(sls.id, onyx.id);
+  gobj.addEdge(sla.id, flclear.id);
+  gobj.addEdge(sla.id, fltough.id);
+  gobj.addEdge(polyjet.id, vero.id);
+  gobj.addEdge(fdm.id, abs.id);
+  gobj.addEdge(fdm.id, nylon.id);
+  gobj.addEdge(fdm.id, onyx.id);
+  gobj.addEdge(sls.id, nylon.id);
 
   // tech - resolution
 
