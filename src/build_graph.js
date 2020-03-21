@@ -34,6 +34,8 @@ function buildGraph() {
   let ori_steep = generateVertex("Orientation", "Steep Angle");
   let ori_shal =  generateVertex("Orientation", "Shallow Angle");
 
+  let ppc_none =  generateVertex(
+    "Post Processing Complexity", "none");
   let ppc_jet =   generateVertex(
     "Post Processing Complexity", "Waterjet req'd");
   let ppc_ipa =   generateVertex(
@@ -94,6 +96,7 @@ function buildGraph() {
   gobj.addVertex(ori_steep.id, ori_steep.v);
   gobj.addVertex(ori_shal.id, ori_shal.v);
 
+  gobj.addVertex(ppc_none.id, ppc_none.v);
   gobj.addVertex(ppc_jet.id, ppc_jet.v);
   gobj.addVertex(ppc_ipa.id, ppc_ipa.v);
   gobj.addVertex(ppc_uv.id, ppc_uv.v);
@@ -142,12 +145,28 @@ function buildGraph() {
   // tech - orientation
 
   // tech - pp complexity
+  gobj.addEdge(sla.id, ppc_ipa.id);
+  gobj.addEdge(sla.id, ppc_uv.id);
+  gobj.addEdge(sla.id, ppc_sand.id);
+  gobj.addEdge(polyjet.id, ppc_jet.id);
+  gobj.addEdge(polyjet.id, ppc_sand.id);
+  gobj.addEdge(fdm.id, ppc_sand.id);
+  gobj.addEdge(sls.id, ppc_none.id);
 
   // tech - pp duration
+  gobj.addEdge(sla.id, ppd_30.id);
+  gobj.addEdge(sla.id, ppd_ovn.id);
+  gobj.addEdge(polyjet.id, ppd_30.id);
+  gobj.addEdge(fdm.id, ppd_60.id);
+  gobj.addEdge(sls.id, ppd_0.id);
 
   // tech - roughness
 
   // tech - platability
+  gobj.addEdge(sla.id, plate_gd.id);
+  gobj.addEdge(polyjet.id, plate_vg.id);
+  gobj.addEdge(fdm.id, plate_gd.id);
+  gobj.addEdge(sls.id, plate_bd.id);
 
   // tech - vswr
 
@@ -168,6 +187,11 @@ function buildGraph() {
   // material - roughness
 
   // material - platability
+  gobj.addEdge(vero.id, plate_vg.id);
+  gobj.addEdge(flclear.id, plate_vg.id);
+  gobj.addEdge(fltough.id, plate_vg.id);
+  gobj.addEdge(nylon.id, plate_bd.id);
+  gobj.addEdge(onyx.id, plate_gd.id);
 
   // material - vswr
 
