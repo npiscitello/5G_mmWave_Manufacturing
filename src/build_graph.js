@@ -117,40 +117,192 @@ function buildGraph() {
   gobj.addVertex(vswr_placeholder.id, vswr_placeholder.v);
   gobj.addVertex(loss_placeholder.id, loss_placeholder.v);
 
+
+
   // an Edge is an incompatibility
-  // <TODO> develop guidelines for edge definition
+  // duplicates are OK - if an edge already exists, addEdge will not do anything
+  // define edges in inter-category groups (for example, tech to tech edges,
+  // tech to material edges, etc) - this should make for the most concise list
+
+  // tech - tech
   gobj.addEdge(sla.id, polyjet.id);
   gobj.addEdge(sla.id, fdm.id);
   gobj.addEdge(sla.id, sls.id);
+  gobj.addEdge(polyjet.id, fdm.id);
+  gobj.addEdge(polyjet.id, sls.id);
+  gobj.addEdge(fdm.id, sls.id);
+
+  // tech - material
   gobj.addEdge(sla.id, abs.id);
   gobj.addEdge(sla.id, vero.id);
   gobj.addEdge(sla.id, nylon.id);
   gobj.addEdge(sla.id, onyx.id);
-
-  gobj.addEdge(polyjet.id, sla.id);
-  gobj.addEdge(polyjet.id, fdm.id);
-  gobj.addEdge(polyjet.id, sls.id);
   gobj.addEdge(polyjet.id, abs.id);
   gobj.addEdge(polyjet.id, flclear.id);
   gobj.addEdge(polyjet.id, fltough.id);
   gobj.addEdge(polyjet.id, nylon.id);
   gobj.addEdge(polyjet.id, onyx.id);
-
-  gobj.addEdge(fdm.id, sla.id);
-  gobj.addEdge(fdm.id, polyjet.id);
-  gobj.addEdge(fdm.id, sls.id);
   gobj.addEdge(fdm.id, vero.id);
   gobj.addEdge(fdm.id, flclear.id);
   gobj.addEdge(fdm.id, fltough.id);
-  
-  gobj.addEdge(sls.id, sla.id);
-  gobj.addEdge(sls.id, polyjet.id);
-  gobj.addEdge(sls.id, fdm.id);
   gobj.addEdge(sls.id, abs.id);
   gobj.addEdge(sls.id, vero.id);
   gobj.addEdge(sls.id, flclear.id);
   gobj.addEdge(sls.id, fltough.id);
   gobj.addEdge(sls.id, onyx.id);
+
+  // tech - resolution
+
+  // tech - cost
+  
+  // tech - length
+
+  // tech - orientation
+
+  // tech - pp complexity
+
+  // tech - pp duration
+
+  // tech - roughness
+
+  // tech - platability
+
+  // tech - vswr
+
+  // tech - loss
+
+  // material - material
+
+  // material - resolution
+
+  // material - cost
+
+  // material - length
+
+  // material - orientation
+
+  // material - pp complexity
+
+  // material - pp duration
+
+  // material - roughness
+
+  // material - platability
+
+  // material - vswr
+
+  // material - loss
+
+  // resolution - resolution
+
+  // resolution - cost
+
+  // resolution - length
+
+  // resolution - orientation
+
+  // resolution - pp complexity
+
+  // resolution - pp duration
+
+  // resolution - roughness
+
+  // resolution - platability
+
+  // resolution - vswr
+
+  // resolution - loss
+
+  // cost - cost
+
+  // cost - length
+
+  // cost - orientation
+
+  // cost - pp complexity
+
+  // cost - pp duration
+
+  // cost - roughness
+
+  // cost - platability
+
+  // cost - vswr
+
+  // cost - loss
+
+  // length - length
+
+  // length - orientation
+
+  // length - pp complexity
+
+  // length - pp duration
+
+  // length - roughness
+
+  // length - platability
+
+  // length - vswr
+
+  // length - loss
+
+  // orientation - orientation
+
+  // orientation - pp complexity
+
+  // orientation - pp duration
+
+  // orientation - roughness
+
+  // orientation - platability
+
+  // orientation - vswr
+
+  // orientation - loss
+
+  // pp complexity - pp complexity
+
+  // pp complexity - pp duration
+
+  // pp complexity - roughness
+
+  // pp complexity - platability
+
+  // pp complexity - vswr
+
+  // pp complexity - loss
+
+  // pp duration - pp duration
+
+  // pp duration - roughness
+
+  // pp duration - platability
+
+  // pp duration - vswr
+
+  // pp duration - loss
+
+  // roughness - roughness
+
+  // roughness - platability
+
+  // roughness - vswr
+
+  // roughness - loss
+
+  // platability - platability
+
+  // platability - vswr
+  
+  // platability - loss
+
+  // vswr - vswr
+
+  // vswr - loss
+
+
+
 
   return gobj.graph;
 }
