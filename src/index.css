@@ -7,6 +7,7 @@ body {
   background-color : #DB0000;
   color : white;
   margin : 10px;
+  width : 110pt;
 }
 
 button {
@@ -17,6 +18,7 @@ button {
   border-radius : 5pt;
   padding : 6pt 10pt;
   min-width : 80pt;
+  vertical-align : middle;
 }
 
 .enabled {
@@ -25,7 +27,7 @@ button {
 }
 
 .enabled:hover {
-  background-color : #003080;
+  background-color : #002080;
 }
 
 .disabled {
