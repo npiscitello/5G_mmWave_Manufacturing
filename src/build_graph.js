@@ -14,6 +14,53 @@ function buildGraph() {
   let nylon =   generateVertex("Material", "Nylon");
   let onyx =    generateVertex("Material", "Onyx");
 
+  let mil0_5 =  generateVertex("Resolution / Dim. Accuracy", "0.5 mil");
+  let mil1 =    generateVertex("Resolution / Dim. Accuracy", "1 mil");
+  let mil3 =    generateVertex("Resolution / Dim. Accuracy", "3 mil");
+  let mil5 =    generateVertex("Resolution / Dim. Accuracy", "5 mil");
+
+  let cost_1 =    generateVertex("Cost (per part)", "$1");
+  let cost_10 =   generateVertex("Cost (per part)", "$10");
+  let cost_50 =   generateVertex("Cost (per part)", "$50");
+  let cost_100 =  generateVertex("Cost (per part)", "$100");
+
+  let len_1 =   generateVertex("Part Length (largest dim)", "1 in");
+  let len_3 =   generateVertex("Part Length (largest dim)", "3 in");
+  let len_6 =   generateVertex("Part Length (largest dim)", "6 in");
+  let len_12 =  generateVertex("Part Length (largest dim)", "12 in");
+
+  let ori_vert =  generateVertex("Orientation", "Vertical");
+  let ori_horiz = generateVertex("Orientation", "Horizontal");
+  let ori_steep = generateVertex("Orientation", "Steep Angle");
+  let ori_shal =  generateVertex("Orientation", "Shallow Angle");
+
+  let ppc_jet =   generateVertex(
+    "Post Processing Complexity", "Waterjet req'd");
+  let ppc_ipa =   generateVertex(
+    "Post Processing Complexity", "IPA Bath req'd");
+  let ppc_uv =    generateVertex(
+    "Post Processing Complexity", "UV Curing req'd");
+  let ppc_sand =  generateVertex(
+    "Post Processing Complexity", "Sanding req'd");
+
+  let ppd_0 = generateVertex("Post Processing Duration", "none");
+  let ppd_10 = generateVertex("Post Processing Duration", "10 min");
+  let ppd_30 = generateVertex("Post Processing Duration", "30 min");
+  let ppd_60 = generateVertex("Post Processing Duration", "1 hour");
+  let ppd_ovn = generateVertex("Post Processing Duration", "overnight");
+
+  let sr_40 = generateVertex("Surface Roughness (Ra)", ">40 µin");
+  let sr_70 = generateVertex("Surface Roughness (Ra)", ">70 µin");
+  let sr_250 = generateVertex("Surface Roughness (Ra)", ">250 µin");
+
+  let plate_vg = generateVertex("Platability", "Very Good");
+  let plate_gd = generateVertex("Platability", "Good");
+  let plate_bd = generateVertex("Platability", "Bad");
+  let plate_np = generateVertex("Platability", "Not Platable");
+
+  let vswr_placeholder = generateVertex("VSWR", "[placeholder]");
+  let loss_placeholder = generateVertex("dB Loss", "[placeholder]");
+
   // a Vertex is a blue box
   gobj.addVertex(sla.id, sla.v);
   gobj.addVertex(polyjet.id, polyjet.v);
@@ -26,6 +73,49 @@ function buildGraph() {
   gobj.addVertex(fltough.id, fltough.v);
   gobj.addVertex(nylon.id, nylon.v);
   gobj.addVertex(onyx.id, onyx.v);
+
+  gobj.addVertex(mil0_5.id, mil0_5.v);
+  gobj.addVertex(mil1.id, mil1.v);
+  gobj.addVertex(mil3.id, mil3.v);
+  gobj.addVertex(mil5.id, mil5.v);
+
+  gobj.addVertex(cost_1.id, cost_1.v);
+  gobj.addVertex(cost_10.id, cost_10.v);
+  gobj.addVertex(cost_50.id, cost_50.v);
+  gobj.addVertex(cost_100.id, cost_100.v);
+
+  gobj.addVertex(len_1.id, len_1.v);
+  gobj.addVertex(len_3.id, len_3.v);
+  gobj.addVertex(len_6.id, len_6.v);
+  gobj.addVertex(len_12.id, len_12.v);
+
+  gobj.addVertex(ori_vert.id, ori_vert.v);
+  gobj.addVertex(ori_horiz.id, ori_horiz.v);
+  gobj.addVertex(ori_steep.id, ori_steep.v);
+  gobj.addVertex(ori_shal.id, ori_shal.v);
+
+  gobj.addVertex(ppc_jet.id, ppc_jet.v);
+  gobj.addVertex(ppc_ipa.id, ppc_ipa.v);
+  gobj.addVertex(ppc_uv.id, ppc_uv.v);
+  gobj.addVertex(ppc_sand.id, ppc_sand.v);
+
+  gobj.addVertex(ppd_0.id, ppd_0.v);
+  gobj.addVertex(ppd_10.id, ppd_10.v);
+  gobj.addVertex(ppd_30.id, ppd_30.v);
+  gobj.addVertex(ppd_60.id, ppd_60.v);
+  gobj.addVertex(ppd_ovn.id, ppd_ovn.v);
+
+  gobj.addVertex(sr_40.id, sr_40.v);
+  gobj.addVertex(sr_70.id, sr_70.v);
+  gobj.addVertex(sr_250.id, sr_250.v);
+
+  gobj.addVertex(plate_vg.id, plate_vg.v);
+  gobj.addVertex(plate_gd.id, plate_gd.v);
+  gobj.addVertex(plate_bd.id, plate_bd.v);
+  gobj.addVertex(plate_np.id, plate_np.v);
+
+  gobj.addVertex(vswr_placeholder.id, vswr_placeholder.v);
+  gobj.addVertex(loss_placeholder.id, loss_placeholder.v);
 
   // an Edge is an incompatibility
   // <TODO> develop guidelines for edge definition
