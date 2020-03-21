@@ -69,11 +69,22 @@ class Matrix extends React.Component {
     state_copy.button_selected[id] = !state_copy.button_selected[id];
     // enable everything then disable based on selected buttons
     // this is easier than tracking diffs when a button is deselected
+    // TODO since we have a list of all the buttons, figure out how to make
+    //    edges compatibilities (b/c that makes more sense intuitively)
     for( const vertex_id in state_copy.button_enabled ) {
       state_copy.button_enabled[vertex_id] = true;
     }
     for( const v1_id in state_copy.button_selected ) {
       if( state_copy.button_selected[v1_id] ) {
+        // any selection automatically disables the rest of its category
+        let category = this.props.graph[v1_id].category;
+        for( const v2_name in this.props.tree[category] ) {
+          if( this.props.tree[category][v2_name] != v1_id ) {
+            state_copy.button_enabled[
+              this.props.tree[category][v2_name]] = false;
+          }
+        }
+        // any selection disables its edges
         for( const v2_id in this.props.graph[v1_id].edges ) {
           state_copy.button_enabled[v2_id] = false;
         }

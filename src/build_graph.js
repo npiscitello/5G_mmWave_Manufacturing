@@ -123,14 +123,7 @@ function buildGraph() {
   // duplicates are OK - if an edge already exists, addEdge will not do anything
   // define edges in inter-category groups (for example, tech to tech edges,
   // tech to material edges, etc) - this should make for the most concise list
-
-  // tech - tech
-  gobj.addEdge(sla.id, polyjet.id);
-  gobj.addEdge(sla.id, fdm.id);
-  gobj.addEdge(sla.id, sls.id);
-  gobj.addEdge(polyjet.id, fdm.id);
-  gobj.addEdge(polyjet.id, sls.id);
-  gobj.addEdge(fdm.id, sls.id);
+  // there can only be 1 selection per category, so no need for same-cat edges
 
   // tech - material
   gobj.addEdge(sla.id, abs.id);
@@ -171,8 +164,6 @@ function buildGraph() {
 
   // tech - loss
 
-  // material - material
-
   // material - resolution
 
   // material - cost
@@ -193,8 +184,6 @@ function buildGraph() {
 
   // material - loss
 
-  // resolution - resolution
-
   // resolution - cost
 
   // resolution - length
@@ -213,8 +202,6 @@ function buildGraph() {
 
   // resolution - loss
 
-  // cost - cost
-
   // cost - length
 
   // cost - orientation
@@ -231,8 +218,6 @@ function buildGraph() {
 
   // cost - loss
 
-  // length - length
-
   // length - orientation
 
   // length - pp complexity
@@ -247,8 +232,6 @@ function buildGraph() {
 
   // length - loss
 
-  // orientation - orientation
-
   // orientation - pp complexity
 
   // orientation - pp duration
@@ -261,8 +244,6 @@ function buildGraph() {
 
   // orientation - loss
 
-  // pp complexity - pp complexity
-
   // pp complexity - pp duration
 
   // pp complexity - roughness
@@ -273,8 +254,6 @@ function buildGraph() {
 
   // pp complexity - loss
 
-  // pp duration - pp duration
-
   // pp duration - roughness
 
   // pp duration - platability
@@ -283,26 +262,17 @@ function buildGraph() {
 
   // pp duration - loss
 
-  // roughness - roughness
-
   // roughness - platability
 
   // roughness - vswr
 
   // roughness - loss
 
-  // platability - platability
-
   // platability - vswr
   
   // platability - loss
 
-  // vswr - vswr
-
   // vswr - loss
-
-
-
 
   return gobj.graph;
 }
