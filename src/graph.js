@@ -39,6 +39,14 @@ class Graph {
     }
   }
 
+  addEdgeCategory( vertex1_id, category ) {
+    for( var vertex2_id in this.graph ) {
+      if( this.graph[vertex2_id].category == category ) {
+        this.addEdge( vertex1_id, vertex2_id );
+      }
+    }
+  }
+
   containsVertex( vertex_id ) {
     return !!this.graph[vertex_id];
   }

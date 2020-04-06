@@ -14,10 +14,10 @@ function buildGraph() {
   let nylon =   generateVertex("Material", "Nylon");
   let onyx =    generateVertex("Material", "Onyx");
 
-  let mil0_5 =  generateVertex("Resolution / Dim. Accuracy", "0.5 mil");
-  let mil1 =    generateVertex("Resolution / Dim. Accuracy", "1 mil");
-  let mil3 =    generateVertex("Resolution / Dim. Accuracy", "3 mil");
-  let mil5 =    generateVertex("Resolution / Dim. Accuracy", "5 mil");
+  let mil_2_5 =  generateVertex("Resolution / Dim. Accuracy", "2.5 mil");
+  let mil_5 =    generateVertex("Resolution / Dim. Accuracy", "5 mil");
+  let mil_7_5 =  generateVertex("Resolution / Dim. Accuracy", "7.5 mil");
+  let mil_10 =   generateVertex("Resolution / Dim. Accuracy", "10+ mil");
 
   let cost_1 =    generateVertex("Cost (per part)", "$1");
   let cost_10 =   generateVertex("Cost (per part)", "$10");
@@ -27,7 +27,7 @@ function buildGraph() {
   let len_1 =   generateVertex("Part Length (largest dim)", "1 in");
   let len_3 =   generateVertex("Part Length (largest dim)", "3 in");
   let len_6 =   generateVertex("Part Length (largest dim)", "6 in");
-  let len_12 =  generateVertex("Part Length (largest dim)", "12 in");
+  let len_12 =  generateVertex("Part Length (largest dim)", "12+ in");
 
   let ori_vert =  generateVertex("Orientation", "Vertical");
   let ori_horiz = generateVertex("Orientation", "Horizontal");
@@ -45,15 +45,16 @@ function buildGraph() {
   let ppc_sand =  generateVertex(
     "Post Processing Complexity", "Sanding req'd");
 
-  let ppd_0 = generateVertex("Post Processing Duration", "none");
-  let ppd_10 = generateVertex("Post Processing Duration", "10 min");
-  let ppd_30 = generateVertex("Post Processing Duration", "30 min");
-  let ppd_60 = generateVertex("Post Processing Duration", "1 hour");
+  let ppd_0 =   generateVertex("Post Processing Duration", "none");
+  let ppd_10 =  generateVertex("Post Processing Duration", "10 min");
+  let ppd_30 =  generateVertex("Post Processing Duration", "30 min");
+  let ppd_60 =  generateVertex("Post Processing Duration", "1 hour");
   let ppd_ovn = generateVertex("Post Processing Duration", "overnight");
 
-  let sr_40 = generateVertex("Surface Roughness (Ra)", ">40 µin");
-  let sr_70 = generateVertex("Surface Roughness (Ra)", ">70 µin");
-  let sr_250 = generateVertex("Surface Roughness (Ra)", ">250 µin");
+  let sr_70 =   generateVertex("Surface Roughness (Ra)", "70 µin");
+  let sr_130 =  generateVertex("Surface Roughness (Ra)", "130 µin");
+  let sr_190 =  generateVertex("Surface Roughness (Ra)", "190 µin");
+  let sr_250 =  generateVertex("Surface Roughness (Ra)", ">250 µin");
 
   let plate_vg = generateVertex("Platability", "Very Good");
   let plate_gd = generateVertex("Platability", "Good");
@@ -76,10 +77,10 @@ function buildGraph() {
   gobj.addVertex(nylon.id, nylon.v);
   gobj.addVertex(onyx.id, onyx.v);
 
-  gobj.addVertex(mil0_5.id, mil0_5.v);
-  gobj.addVertex(mil1.id, mil1.v);
-  gobj.addVertex(mil3.id, mil3.v);
-  gobj.addVertex(mil5.id, mil5.v);
+  gobj.addVertex(mil_2_5.id, mil_2_5.v);
+  gobj.addVertex(mil_5.id, mil_5.v);
+  gobj.addVertex(mil_7_5.id, mil_7_5.v);
+  gobj.addVertex(mil_10.id, mil_10.v);
 
   gobj.addVertex(cost_1.id, cost_1.v);
   gobj.addVertex(cost_10.id, cost_10.v);
@@ -108,8 +109,9 @@ function buildGraph() {
   gobj.addVertex(ppd_60.id, ppd_60.v);
   gobj.addVertex(ppd_ovn.id, ppd_ovn.v);
 
-  gobj.addVertex(sr_40.id, sr_40.v);
   gobj.addVertex(sr_70.id, sr_70.v);
+  gobj.addVertex(sr_130.id, sr_130.v);
+  gobj.addVertex(sr_190.id, sr_190.v);
   gobj.addVertex(sr_250.id, sr_250.v);
 
   gobj.addVertex(plate_vg.id, plate_vg.v);
@@ -137,12 +139,31 @@ function buildGraph() {
   gobj.addEdge(sls.id, nylon.id);
 
   // tech - resolution
+  gobj.addEdge(sla.id, mil_5.id)
+  gobj.addEdge(sla.id, mil_7_5.id);
+  gobj.addEdge(sla.id, mil_10.id);
+  gobj.addEdge(polyjet.id, mil_7_5.id);
+  gobj.addEdge(polyjet.id, mil_10.id);
+  gobj.addEdge(fdm.id, mil_10.id);
+  gobj.addEdge(sls.id, mil_10.id);
 
   // tech - cost
+  // <TODO>
   
   // tech - length
+  gobj.addEdge(sla.id, len_1.id);
+  gobj.addEdge(sla.id, len_3.id);
+  gobj.addEdge(sla.id, len_6.id);
+  gobj.addEdgeCategory(polyjet.id, len_1.v.category);
+  gobj.addEdgeCategory(fdm.id, len_1.v.category);
+  gobj.addEdgeCategory(sls.id, len_1.v.category);
 
   // tech - orientation
+  gobj.addEdge(sla.id, ori_vert.id);
+  gobj.addEdge(sla.id, ori_steep.id);
+  gobj.addEdge(polyjet.id, ori_horiz.id);
+  gobj.addEdge(fdm.id, ori_horiz.id);
+  gobj.addEdgeCategory(sls.id, ori_horiz.v.category);
 
   // tech - pp complexity
   gobj.addEdge(sla.id, ppc_ipa.id);
@@ -161,6 +182,11 @@ function buildGraph() {
   gobj.addEdge(sls.id, ppd_0.id);
 
   // tech - roughness
+  gobj.addEdgeCategory(sla.id, sr_70.v.category);
+  gobj.addEdgeCategory(polyjet.id, sr_70.v.category);
+  gobj.addEdge(fdm.id, sr_190.id);
+  gobj.addEdge(fdm.id, sr_250.id);
+  gobj.addEdge(sls.id, sr_250.id);
 
   // tech - platability
   gobj.addEdge(sla.id, plate_gd.id);
@@ -169,16 +195,50 @@ function buildGraph() {
   gobj.addEdge(sls.id, plate_bd.id);
 
   // tech - vswr
+  // <TODO>
 
   // tech - loss
+  // <TODO>
 
+  // material edges are the union of the edges of the technologies they're 
+  // compatible with
   // material - resolution
+  gobj.addEdge(abs.id, mil_10.id);
+  gobj.addEdge(vero.id, mil_7_5.id);
+  gobj.addEdge(vero.id, mil_10.id);
+  gobj.addEdge(flclear.id, mil_5.id);
+  gobj.addEdge(flclear.id, mil_7_5.id);
+  gobj.addEdge(flclear.id, mil_10.id);
+  gobj.addEdge(fltough.id, mil_5.id);
+  gobj.addEdge(fltough.id, mil_7_5.id);
+  gobj.addEdge(fltough.id, mil_10.id);
+  gobj.addEdge(nylon.id, mil_10.id);
+  gobj.addEdge(onyx.id, mil_10.id);
 
   // material - cost
+  // <TODO>
 
   // material - length
+  gobj.addEdgeCategory(abs.id, len_1.v.category);
+  gobj.addEdgeCategory(vero.id, len_1.v.category);
+  gobj.addEdge(flclear.id, len_1.id);
+  gobj.addEdge(flclear.id, len_3.id);
+  gobj.addEdge(flclear.id, len_6.id);
+  gobj.addEdge(fltough.id, len_1.id);
+  gobj.addEdge(fltough.id, len_3.id);
+  gobj.addEdge(fltough.id, len_6.id);
+  gobj.addEdgeCategory(nylon.id, len_1.v.category);
+  gobj.addEdgeCategory(onyx.id, len_1.v.category);
 
   // material - orientation
+  gobj.addEdge(abs.id, ori_horiz.id);
+  gobj.addEdge(vero.id, ori_horiz.id);
+  gobj.addEdge(flclear.id, ori_vert.id);
+  gobj.addEdge(flclear.id, ori_steep.id);
+  gobj.addEdge(fltough.id, ori_vert.id);
+  gobj.addEdge(fltough.id, ori_steep.id);
+  gobj.addEdgeCategory(nylon.id, ori_vert.v.category);
+  gobj.addEdge(onyx.id, ori_horiz.id);
 
   // material - pp complexity
 
@@ -188,14 +248,16 @@ function buildGraph() {
 
   // material - platability
   gobj.addEdge(vero.id, plate_vg.id);
-  gobj.addEdge(flclear.id, plate_vg.id);
-  gobj.addEdge(fltough.id, plate_vg.id);
+  gobj.addEdge(flclear.id, plate_gd.id);
+  gobj.addEdge(fltough.id, plate_gd.id);
   gobj.addEdge(nylon.id, plate_bd.id);
   gobj.addEdge(onyx.id, plate_gd.id);
 
   // material - vswr
+  // <TODO>
 
   // material - loss
+  // <TODO>
 
   // resolution - cost
 
