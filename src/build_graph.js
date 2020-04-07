@@ -14,7 +14,6 @@ function buildGraph() {
   let nylon =   generateVertex("Material", "Nylon");
   let onyx =    generateVertex("Material", "Onyx");
 
-  let mil_2_5 =  generateVertex("Resolution / Dim. Accuracy", "2.5 mil");
   let mil_5 =    generateVertex("Resolution / Dim. Accuracy", "5 mil");
   let mil_7_5 =  generateVertex("Resolution / Dim. Accuracy", "7.5 mil");
   let mil_10 =   generateVertex("Resolution / Dim. Accuracy", "10+ mil");
@@ -77,7 +76,6 @@ function buildGraph() {
   gobj.addVertex(nylon.id, nylon.v);
   gobj.addVertex(onyx.id, onyx.v);
 
-  gobj.addVertex(mil_2_5.id, mil_2_5.v);
   gobj.addVertex(mil_5.id, mil_5.v);
   gobj.addVertex(mil_7_5.id, mil_7_5.v);
   gobj.addVertex(mil_10.id, mil_10.v);
@@ -241,10 +239,40 @@ function buildGraph() {
   gobj.addEdge(onyx.id, ori_horiz.id);
 
   // material - pp complexity
+  gobj.addEdge(abs.id, ppc_sand.id);
+  gobj.addEdge(vero.id, ppc_jet.id);
+  gobj.addEdge(vero.id, ppc_sand.id);
+  gobj.addEdge(flclear.id, ppc_ipa.id);
+  gobj.addEdge(flclear.id, ppc_uv.id);
+  gobj.addEdge(flclear.id, ppc_sand.id);
+  gobj.addEdge(fltough.id, ppc_ipa.id);
+  gobj.addEdge(fltough.id, ppc_uv.id);
+  gobj.addEdge(fltough.id, ppc_sand.id);
+  gobj.addEdge(nylon.id, ppc_none.id);
+  gobj.addEdge(nylon.id, ppc_sand.id);
+  gobj.addEdge(onyx.id, ppc_sand.id);
 
   // material - pp duration
+  gobj.addEdge(abs.id, ppd_60.id);
+  gobj.addEdge(vero.id, ppd_30.id);
+  gobj.addEdge(flclear.id, ppd_30.id);
+  gobj.addEdge(flclear.id, ppd_ovn.id);
+  gobj.addEdge(fltough.id, ppd_30.id);
+  gobj.addEdge(fltough.id, ppd_ovn.id);
+  gobj.addEdge(nylon.id, ppd_60.id);
+  gobj.addEdge(nylon.id, ppd_0.id);
+  gobj.addEdge(onyx.id, ppd_60.id);
 
   // material - roughness
+  gobj.addEdge(abs.id, sr_190.id);
+  gobj.addEdge(abs.id, sr_250.id);
+  gobj.addEdgeCategory(vero.id, sr_70.v.category);
+  gobj.addEdgeCategory(flclear.id, sr_70.v.category);
+  gobj.addEdgeCategory(fltough.id, sr_70.v.category);
+  gobj.addEdge(nylon.id, sr_190.id);
+  gobj.addEdge(nylon.id, sr_250.id);
+  gobj.addEdge(onyx.id, sr_190.id);
+  gobj.addEdge(onyx.id, sr_250.id);
 
   // material - platability
   gobj.addEdge(vero.id, plate_vg.id);
@@ -259,11 +287,25 @@ function buildGraph() {
   // material - loss
   // <TODO>
 
+  // resolution edges are mostly based on the edges of the technologies that
+  // operate at that resolution
   // resolution - cost
+  // <TODO>
 
   // resolution - length
+  gobj.addEdge(mil_5.id, len_1.id);
+  gobj.addEdge(mil_5.id, len_3.id);
+  gobj.addEdge(mil_5.id, len_6.id);
+  gobj.addEdgeCategory(mil_7_5.id, len_1.v.category);
+  gobj.addEdgeCategory(mil_10.id, len_1.v.category);
 
   // resolution - orientation
+  gobj.addEdge(mil_5.id, ori_vert.id);
+  gobj.addEdge(mil_5.id, ori_steep.id);
+  gobj.addEdge(mil_7_5.id, ori_vert.id);
+  gobj.addEdge(mil_7_5.id, ori_horiz.id);
+  gobj.addEdge(mil_7_5.id, ori_steep.id);
+  gobj.addEdgeCategory(mil_10.id, ori_vert.v.category);
 
   // resolution - pp complexity
 
@@ -278,20 +320,28 @@ function buildGraph() {
   // resolution - loss
 
   // cost - length
+  // <TODO>
 
   // cost - orientation
+  // <TODO>
 
   // cost - pp complexity
+  // <TODO>
 
   // cost - pp duration
+  // <TODO>
 
   // cost - roughness
+  // <TODO>
 
   // cost - platability
+  // <TODO>
 
   // cost - vswr
+  // <TODO>
 
   // cost - loss
+  // <TODO>
 
   // length - orientation
 
