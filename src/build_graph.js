@@ -308,16 +308,44 @@ function buildGraph() {
   gobj.addEdgeCategory(mil_10.id, ori_vert.v.category);
 
   // resolution - pp complexity
+  gobj.addEdge(mil_5.id, ppc_ipa.id);
+  gobj.addEdge(mil_5.id, ppc_uv.id);
+  gobj.addEdge(mil_5.id, ppc_sand.id);
+  gobj.addEdge(mil_7_5.id, ppc_jet.id);
+  gobj.addEdge(mil_7_5.id, ppc_ipa.id);
+  gobj.addEdge(mil_7_5.id, ppc_uv.id);
+  gobj.addEdge(mil_7_5.id, ppc_sand.id);
+  gobj.addEdge(mil_10.id, ppc_none.id);
+  gobj.addEdge(mil_10.id, ppc_sand.id);
 
   // resolution - pp duration
+  gobj.addEdge(mil_5.id, ppd_30.id);
+  gobj.addEdge(mil_5.id, ppd_ovn.id);
+  gobj.addEdge(mil_7_5.id, ppd_30.id);
+  gobj.addEdge(mil_7_5.id, ppd_ovn.id);
+  gobj.addEdge(mil_10.id, ppd_0.id);
+  gobj.addEdge(mil_10.id, ppd_30.id);
+  gobj.addEdge(mil_10.id, ppd_60.id);
+  gobj.addEdge(mil_10.id, ppd_ovn.id);
 
   // resolution - roughness
+  gobj.addEdgeCategory(mil_5.id, sr_70.v.category);
+  gobj.addEdgeCategory(mil_7_5.id, sr_70.v.category);
+  gobj.addEdgeCategory(mil_10.id, sr_70.v.category);
 
   // resolution - platability
+  gobj.addEdge(mil_5.id, plate_gd.id);
+  gobj.addEdge(mil_7_5.id, plate_vg.id);
+  gobj.addEdge(mil_7_5.id, plate_gd.id);
+  gobj.addEdge(mil_10.id, plate_vg.id);
+  gobj.addEdge(mil_10.id, plate_gd.id);
+  gobj.addEdge(mil_10.id, plate_bd.id);
 
   // resolution - vswr
+  // <TODO>
 
   // resolution - loss
+  // <TODO>
 
   // cost - length
   // <TODO>
@@ -343,61 +371,196 @@ function buildGraph() {
   // cost - loss
   // <TODO>
 
+  // length edges are based on the technologies that support each length
   // length - orientation
+  gobj.addEdgeCategory(len_1.id, ori_vert.v.category);
+  gobj.addEdgeCategory(len_3.id, ori_vert.v.category);
+  gobj.addEdgeCategory(len_6.id, ori_vert.v.category);
+  gobj.addEdgeCategory(len_12.id, ori_vert.v.category);
 
   // length - pp complexity
+  gobj.addEdgeCategory(len_1.id, ppc_none.v.category);
+  gobj.addEdgeCategory(len_3.id, ppc_none.v.category);
+  gobj.addEdgeCategory(len_6.id, ppc_none.v.category);
+  gobj.addEdge(len_12.id, ppc_none.id);
+  gobj.addEdge(len_12.id, ppc_jet.id);
+  gobj.addEdge(len_12.id, ppc_sand.id);
 
   // length - pp duration
+  gobj.addEdge(len_1.id, ppd_0.id);
+  gobj.addEdge(len_1.id, ppd_30.id);
+  gobj.addEdge(len_1.id, ppd_60.id);
+  gobj.addEdge(len_1.id, ppd_ovn.id);
+  gobj.addEdge(len_3.id, ppd_0.id);
+  gobj.addEdge(len_3.id, ppd_30.id);
+  gobj.addEdge(len_3.id, ppd_60.id);
+  gobj.addEdge(len_3.id, ppd_ovn.id);
+  gobj.addEdge(len_6.id, ppd_0.id);
+  gobj.addEdge(len_6.id, ppd_30.id);
+  gobj.addEdge(len_6.id, ppd_60.id);
+  gobj.addEdge(len_6.id, ppd_ovn.id);
+  gobj.addEdge(len_12.id, ppd_0.id);
+  gobj.addEdge(len_12.id, ppd_30.id);
+  gobj.addEdge(len_12.id, ppd_60.id);
 
   // length - roughness
+  gobj.addEdgeCategory(len_1.id, sr_70.v.category);
+  gobj.addEdgeCategory(len_3.id, sr_70.v.category);
+  gobj.addEdgeCategory(len_6.id, sr_70.v.category);
+  gobj.addEdgeCategory(len_12.id, sr_70.v.category);
 
   // length - platability
+  gobj.addEdge(len_1.id, plate_vg.id);
+  gobj.addEdge(len_1.id, plate_gd.id);
+  gobj.addEdge(len_1.id, plate_bd.id);
+  gobj.addEdge(len_3.id, plate_vg.id);
+  gobj.addEdge(len_3.id, plate_gd.id);
+  gobj.addEdge(len_3.id, plate_bd.id);
+  gobj.addEdge(len_6.id, plate_vg.id);
+  gobj.addEdge(len_6.id, plate_gd.id);
+  gobj.addEdge(len_6.id, plate_bd.id);
+  gobj.addEdge(len_12.id, plate_vg.id);
+  gobj.addEdge(len_12.id, plate_gd.id);
+  gobj.addEdge(len_12.id, plate_bd.id);
 
   // length - vswr
+  // <TODO>
 
   // length - loss
+  // <TODO>
 
+  // orientation edges are based on the technologies that support each
+  // orientation
   // orientation - pp complexity
+  gobj.addEdge(ori_vert.id, ppc_none.id);
+  gobj.addEdge(ori_vert.id, ppc_ipa.id);
+  gobj.addEdge(ori_vert.id, ppc_uv.id);
+  gobj.addEdge(ori_vert.id, ppc_sand.id);
+  gobj.addEdge(ori_horiz.id, ppc_none.id);
+  gobj.addEdge(ori_horiz.id, ppc_jet.id);
+  gobj.addEdge(ori_horiz.id, ppc_sand.id);
+  gobj.addEdge(ori_steep.id, ppc_none.id);
+  gobj.addEdge(ori_steep.id, ppc_ipa.id);
+  gobj.addEdge(ori_steep.id, ppc_uv.id);
+  gobj.addEdge(ori_steep.id, ppc_sand.id);
+  gobj.addEdge(ori_shal.id, ppc_none.id);
 
   // orientation - pp duration
+  gobj.addEdge(ori_vert.id, ppd_0.id);
+  gobj.addEdge(ori_vert.id, ppd_30.id);
+  gobj.addEdge(ori_vert.id, ppd_ovn.id);
+  gobj.addEdge(ori_horiz.id, ppd_0.id);
+  gobj.addEdge(ori_horiz.id, ppd_30.id);
+  gobj.addEdge(ori_horiz.id, ppd_60.id);
+  gobj.addEdge(ori_steep.id, ppd_0.id);
+  gobj.addEdge(ori_steep.id, ppd_30.id);
+  gobj.addEdge(ori_steep.id, ppd_ovn.id);
+  gobj.addEdge(ori_shal.id, ppd_0.id);
 
   // orientation - roughness
+  gobj.addEdgeCategory(ori_vert.id, sr_70.v.category);
+  gobj.addEdgeCategory(ori_horiz.id, sr_70.v.category);
+  gobj.addEdgeCategory(ori_steep.id, sr_70.v.category);
+  gobj.addEdge(ori_shal.id, sr_250.id);
 
   // orientation - platability
+  gobj.addEdge(ori_vert.id, plate_gd.id);
+  gobj.addEdge(ori_vert.id, plate_bd.id);
+  gobj.addEdge(ori_horiz.id, plate_vg.id);
+  gobj.addEdge(ori_horiz.id, plate_gd.id);
+  gobj.addEdge(ori_horiz.id, plate_bd.id);
+  gobj.addEdge(ori_steep.id, plate_gd.id);
+  gobj.addEdge(ori_steep.id, plate_bd.id);
+  gobj.addEdge(ori_shal.id, plate_bd.id);
 
   // orientation - vswr
+  // <TODO>
 
   // orientation - loss
+  // <TODO>
 
+  // post-processing edges are based on the technologies that require each type
+  // and amount of post-processing
   // pp complexity - pp duration
+  gobj.addEdge(ppc_none.id, ppd_0.id);
+  gobj.addEdge(ppc_jet.id, ppd_30.id);
+  gobj.addEdge(ppc_ipa.id, ppd_30.id);
+  gobj.addEdge(ppc_uv.id, ppd_ovn.id);
+  gobj.addEdge(ppc_sand.id, ppd_30.id);
+  gobj.addEdge(ppc_sand.id, ppd_60.id);
 
   // pp complexity - roughness
+  gobj.addEdge(ppc_none.id, sr_250.id);
+  gobj.addEdgeCategory(ppc_jet.id, sr_70.v.category);
+  gobj.addEdgeCategory(ppc_ipa.id, sr_70.v.category);
+  gobj.addEdgeCategory(ppc_uv.id, sr_70.v.category);
+  gobj.addEdgeCategory(ppc_sand.id, sr_70.v.category);
 
   // pp complexity - platability
+  gobj.addEdge(ppc_none.id, plate_bd.id);
+  gobj.addEdge(ppc_jet.id, plate_vg.id);
+  gobj.addEdge(ppc_ipa.id, plate_gd.id);
+  gobj.addEdge(ppc_uv.id, plate_gd.id);
+  gobj.addEdge(ppc_sand, plate_vg.id);
+  gobj.addEdge(ppc_sand, plate_gd.id);
+  gobj.addEdge(ppc_sand, plate_bd.id);
 
   // pp complexity - vswr
+  // <TODO>
 
   // pp complexity - loss
+  // <TODO>
 
   // pp duration - roughness
+  gobj.addEdge(ppd_0.id, sr_250.id);
+  gobj.addEdgeCategory(ppd_30.id, sr_70.v.category);
+  gobj.addEdge(ppd_60.id, sr_190.id);
+  gobj.addEdge(ppd_60.id, sr_250.id);
+  gobj.addEdgeCategory(ppd_ovn, sr_70.v.category);
 
   // pp duration - platability
+  gobj.addEdge(ppd_0.id, plate_bd.id);
+  gobj.addEdge(ppd_30.id, plate_vg.id);
+  gobj.addEdge(ppd_30.id, plate_gd.id);
+  gobj.addEdge(ppd_60.id, plate_gd.id);
+  gobj.addEdge(ppd_60.id, plate_bd.id);
+  gobj.addEdge(ppd_ovn.id, plate_gd.id);
 
   // pp duration - vswr
+  // <TODO>
 
   // pp duration - loss
+  // <TODO>
 
+  // roughness edges are based on the technologies that can produce each sr
   // roughness - platability
+  gobj.addEdge(sr_70.id, plate_vg.id);
+  gobj.addEdge(sr_70.id, plate_gd.id);
+  gobj.addEdge(sr_130.id, plate_vg.id);
+  gobj.addEdge(sr_130.id, plate_gd.id);
+  gobj.addEdge(sr_190.id, plate_vg.id);
+  gobj.addEdge(sr_190.id, plate_gd.id);
+  gobj.addEdge(sr_190.id, plate_bd.id);
+  gobj.addEdge(sr_250.id, plate_vg.id);
+  gobj.addEdge(sr_250.id, plate_gd.id);
+  gobj.addEdge(sr_250.id, plate_bd.id);
 
   // roughness - vswr
+  // <TODO>
 
   // roughness - loss
+  // <TODO>
 
+  // platability edges are based on the edges of the materials that have each
+  // plating characteristic
   // platability - vswr
+  // <TODO>
   
   // platability - loss
+  // <TODO>
 
   // vswr - loss
+  // <TODO>
 
   return gobj.graph;
 }
